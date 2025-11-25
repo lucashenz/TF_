@@ -30,6 +30,11 @@ public class Venda {
     }
 
 
+
+
+
+
+
     public double calculaValorFinal(Queue<Venda> FilaDevendas) {
         if (tecnologia == null || tecnologia.getFornecedor() == null) {
             System.err.println("Erro: tecnologia ou fornecedor não definido para a venda" + num);
@@ -130,5 +135,11 @@ public class Venda {
         }catch(Exception e){
             System.out.println("Erro ao remover determinada venda: "+e.getMessage());
         }
+    }
+
+
+    public int size() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'size'");
     }
 }

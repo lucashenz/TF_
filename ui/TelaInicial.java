@@ -197,6 +197,7 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         btnVendas.setText("Vendas");
+    
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -268,6 +269,7 @@ public class TelaInicial extends javax.swing.JFrame {
         this.setVisible(true);
     }//GEN-LAST:event_btnTecnologiaActionPerformed
 
+    
     /**
      * @param args the command line arguments
      */

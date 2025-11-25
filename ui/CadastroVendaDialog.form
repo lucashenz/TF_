@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
+  <Properties>
+    <Property name="defaultCloseOperation" type="int" value="2"/>
+  </Properties>
+  <SyntheticProperties>
+    <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
+  </SyntheticProperties>
+
+  <Layout>
+    <DimensionLayout dim="0">
+      <Group type="103" groupAlignment="0" attributes="0">
+        <Group type="102" attributes="0">
+          <Component id="jLabelId" min="-2" max="-2"/>
+          <Component id="TFId" min="-2" max="-2"/>
+          <Component id="jLabelData" min="-2" max="-2"/>
+          <Component id="TFData" min="-2" max="-2"/>
+          <Component id="jLabelComprador" min="-2" max="-2"/>
+          <Component id="TFComprador" min="-2" max="-2"/>
+          <Component id="jLabelTecnologia" min="-2" max="-2"/>
+          <Component id="TFTecnologia" min="-2" max="-2"/>
+          <Component id="btnCadastrar" min="-2" max="-2"/>
+          <Component id="btnLimpar" min="-2" max="-2"/>
+          <Component id="TALog" min="-2" pref="100" max="-2"/>
+        </Group>
+      </Group>
+    </DimensionLayout>
+    <DimensionLayout dim="1">
+      <!-- Layout vertical semelhante, com labels e textfields -->
+    </DimensionLayout>
+  </Layout>
+
+  <SubComponents>
+    <Component class="javax.swing.JLabel" name="jLabelId">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Número da Venda:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TFId"/>
+    
+    <Component class="javax.swing.JLabel" name="jLabelData">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Data (dd/MM/yyyy):"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TFData"/>
+
+    <Component class="javax.swing.JLabel" name="jLabelComprador">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Comprador:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TFComprador"/>
+
+    <Component class="javax.swing.JLabel" name="jLabelTecnologia">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Tecnologia:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="TFTecnologia"/>
+
+    <Component class="javax.swing.JButton" name="btnCadastrar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cadastrar"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnLimpar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Limpar"/>
+      </Properties>
+    </Component>
+
+    <Component class="javax.swing.JTextArea" name="TALog">
+      <Properties>
+        <Property name="columns" type="int" value="20"/>
+        <Property name="rows" type="int" value="5"/>
+        <Property name="editable" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+  </SubComponents>
+</Form>
