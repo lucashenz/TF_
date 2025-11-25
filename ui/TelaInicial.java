@@ -164,7 +164,7 @@ public class TelaInicial extends javax.swing.JFrame {
         btnVendas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Exercício 3 - POO");
+        setTitle("TRABALHO FINAL POO");
 
         btnFinalizar.setText("Fechar");
         btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
