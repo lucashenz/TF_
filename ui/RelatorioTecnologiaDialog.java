@@ -2,23 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package com.mycompany.mavenproject1;
+package ui;
+import entidades.*;
 
 /**
  *
  * @author arthurzimmer
  */
-public class RelatorioCompradorDialog extends javax.swing.JDialog {
+public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioCompradorDialog.class.getName());
-    private Compradores compradores;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioTecnologiaDialog.class.getName());
+    private Tecnologias tecnologias;
     /**
-     * Creates new form RelatorioCompradorDialog
+     * Creates new form RelatorioTecnologiaDialog
      */
-    public RelatorioCompradorDialog(java.awt.Frame parent, boolean modal, Compradores listaCompradores) {
+    public RelatorioTecnologiaDialog(java.awt.Frame parent, boolean modal, Tecnologias listaTecnologias) {
         super(parent, modal);        
         initComponents();        
-        this.compradores = listaCompradores;
+        this.tecnologias = listaTecnologias;
 
         java.awt.Color corFundo = java.awt.Color.WHITE; 
         java.awt.Color corPrimaria = new java.awt.Color(0, 80, 160); // Azul
@@ -32,7 +33,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
 
         java.awt.Font fonteTitulo = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22);
         java.awt.Font fonteBotao = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
-        java.awt.Font fonteRelatorio = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 14); // Fonte monoespaçada
+        java.awt.Font fonteRelatorio = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 14);
 
         // dialog
         getContentPane().removeAll();
@@ -44,7 +45,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         panelTitulo.setBackground(corFundo);
         panelTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 25, 15, 25));
         
-        javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Compradores");
+        javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Tecnologia");
         lblTitulo.setFont(fonteTitulo);
         lblTitulo.setForeground(corPrimaria);
         panelTitulo.add(lblTitulo);
@@ -54,19 +55,19 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         panelCentro.setBackground(corFundo);
         panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 25, 20, 25)); // Padding
         
-        // rext pane relatorio
+        // text pane relatorio
         TPRelatorio.setEditable(false); 
         TPRelatorio.setFont(fonteRelatorio);
         TPRelatorio.setBackground(corFundoRelatorio);
         TPRelatorio.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding interno
         
-        // scroll pane relatorio
+        // scrollpane relatorio
         jScrollPane1.setViewportView(TPRelatorio);
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(corBordaCampo)); // Borda cinza
         
         panelCentro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        // botoes
+        // botões
         javax.swing.JPanel panelSul = new javax.swing.JPanel(new java.awt.BorderLayout());
         panelSul.setBackground(corFundo);
         panelSul.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 25, 20, 25));
@@ -84,7 +85,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         java.awt.Dimension tamBotaoSecundario = new java.awt.Dimension(110, 35);
         java.awt.Dimension tamBotaoPrimario = new java.awt.Dimension(160, 35); // Botão "Gerar"
 
-        // estilo primário (azul)
+        // estilo primario - azul
         java.util.function.Consumer<javax.swing.AbstractButton> estiloPrimario = (botao) -> {
             botao.setFont(fonteBotao);
             botao.setBackground(corPrimaria);
@@ -100,7 +101,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
             });
         };
 
-        // estilo secundário (cinza)
+        // estilo secundario - cinza
         java.util.function.Consumer<javax.swing.AbstractButton> estiloSecundario = (botao) -> {
             botao.setFont(fonteBotao);
             botao.setBackground(corSecundaria);
@@ -116,21 +117,21 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
             });
         };
 
-        // aplica estilos
-        estiloPrimario.accept(jButton2); // Botão Gerar Relatório (Principal)
-        estiloSecundario.accept(jButton1); // Botão Voltar (Secundário)
+        // aplica style
+        estiloPrimario.accept(btnRelatório); // Botão Gerar Relatório (Principal)
+        estiloSecundario.accept(btnVoltar); // Botão Voltar (Secundário)
 
         // adicionar botões aos painéis
-        panelBotoesEsquerda.add(jButton2); // Gerar Relatório
-        panelBotoesDireita.add(jButton1); // Voltar
+        panelBotoesEsquerda.add(btnRelatório); // Gerar Relatório
+        panelBotoesDireita.add(btnVoltar); // Voltar
 
         // monta tudo
         getContentPane().add(panelTitulo, java.awt.BorderLayout.NORTH);
         getContentPane().add(panelCentro, java.awt.BorderLayout.CENTER);
         getContentPane().add(panelSul, java.awt.BorderLayout.SOUTH);
 
-        // tamanho e visibilidade
-        this.setSize(800, 600);
+        // ajusta tamanho e visibilidade
+        this.setSize(800, 600); // Tamanho padrão
         this.setMinimumSize(new java.awt.Dimension(500, 400));
         this.setResizable(true);
     }
@@ -146,26 +147,27 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         TPRelatorio = new javax.swing.JTextPane();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnVoltar = new javax.swing.JButton();
+        btnRelatório = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Relatório Tecnologia");
 
         TPRelatorio.setEnabled(false);
         TPRelatorio.setFocusable(false);
         jScrollPane1.setViewportView(TPRelatorio);
 
-        jButton1.setText("Voltar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnVoltar.setText("Voltar");
+        btnVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnVoltarActionPerformed(evt);
             }
         });
 
-        jButton2.setText("Gerar Relatório");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnRelatório.setText("Gerar Relatório");
+        btnRelatório.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnRelatórioActionPerformed(evt);
             }
         });
 
@@ -173,16 +175,16 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(23, 23, 23))
+                .addGap(16, 16, 16)
+                .addComponent(btnVoltar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRelatório)
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -191,28 +193,28 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnVoltar)
+                    .addComponent(btnRelatório))
                 .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int tam = compradores.size();
+    private void btnRelatórioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatórioActionPerformed
+        int tam = tecnologias.size();
         String relatorio = "";
         
         for (int i = 0; i < tam; i++) {
-            relatorio = relatorio + "DADOS DO COMPRADOR " + (i + 1) + ": " + compradores.getComprador(i).geraDescricao() + "\n\n";
+            relatorio = relatorio + "DADOS DA TECNOLOGIA " + (i + 1) + ": " + tecnologias.getTecnologia(i).toString() + "\n\n";
         }
         
         TPRelatorio.setText(relatorio);
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btnRelatórioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,9 +242,11 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
             @Override
             public void run() {
                 javax.swing.JFrame framePaiParaTeste = new javax.swing.JFrame();
-                java.util.ArrayList<Comprador> listaTeste = new java.util.ArrayList<>();
-                Compradores compradoresParaTeste = new Compradores(listaTeste);
-                RelatorioCompradorDialog dialog = new RelatorioCompradorDialog(new javax.swing.JFrame(), true, compradoresParaTeste);
+                java.util.ArrayList<Tecnologia> listaTeste = new java.util.ArrayList<>();
+                Tecnologias tecnologiasParaTeste = new Tecnologias(listaTeste);
+                java.util.ArrayList<Fornecedor> listaFornTeste = new java.util.ArrayList<>();
+                Fornecedores fornecedoresParaTeste = new Fornecedores(listaFornTeste);
+                CadastroTecnologiaDialog dialog = new CadastroTecnologiaDialog(framePaiParaTeste, true, fornecedoresParaTeste, tecnologiasParaTeste);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -256,8 +260,8 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane TPRelatorio;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton btnRelatório;
+    private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

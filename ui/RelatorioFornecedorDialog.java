@@ -2,23 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
-package com.mycompany.mavenproject1;
+package ui;
+import entidades.*;
 
 /**
  *
  * @author arthurzimmer
  */
-public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
+public class RelatorioFornecedorDialog extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioTecnologiaDialog.class.getName());
-    private Tecnologias tecnologias;
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioFornecedorDialog.class.getName());
+    Fornecedores fornecedores;
+    
     /**
-     * Creates new form RelatorioTecnologiaDialog
+     * Creates new form RelatorioFornecedorDialog
      */
-    public RelatorioTecnologiaDialog(java.awt.Frame parent, boolean modal, Tecnologias listaTecnologias) {
+    public RelatorioFornecedorDialog(java.awt.Frame parent, boolean modal, Fornecedores fornecedores) {
         super(parent, modal);        
         initComponents();        
-        this.tecnologias = listaTecnologias;
+        this.fornecedores = fornecedores;
 
         java.awt.Color corFundo = java.awt.Color.WHITE; 
         java.awt.Color corPrimaria = new java.awt.Color(0, 80, 160); // Azul
@@ -32,7 +34,7 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
 
         java.awt.Font fonteTitulo = new java.awt.Font("Segoe UI", java.awt.Font.BOLD, 22);
         java.awt.Font fonteBotao = new java.awt.Font("Segoe UI", java.awt.Font.PLAIN, 14);
-        java.awt.Font fonteRelatorio = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 14);
+        java.awt.Font fonteRelatorio = new java.awt.Font("Monospaced", java.awt.Font.PLAIN, 14); // Fonte monoespaçada
 
         // dialog
         getContentPane().removeAll();
@@ -44,24 +46,24 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         panelTitulo.setBackground(corFundo);
         panelTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 25, 15, 25));
         
-        javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Tecnologia");
+        javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Fornecedores"); 
         lblTitulo.setFont(fonteTitulo);
         lblTitulo.setForeground(corPrimaria);
         panelTitulo.add(lblTitulo);
         
-        // relatorio
+        // painel relatorio
         javax.swing.JPanel panelCentro = new javax.swing.JPanel(new java.awt.BorderLayout());
         panelCentro.setBackground(corFundo);
         panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 25, 20, 25)); // Padding
         
-        // text pane relatorio
-        TPRelatorio.setEditable(false); 
+        // textpane relatorio
+        TPRelatorio.setEditable(false);
         TPRelatorio.setFont(fonteRelatorio);
         TPRelatorio.setBackground(corFundoRelatorio);
         TPRelatorio.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding interno
         
-        // scrollpane relatorio
-        jScrollPane1.setViewportView(TPRelatorio);
+        // estilo scroll pane
+        jScrollPane1.setViewportView(TPRelatorio); // Já está feito, mas garantindo
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(corBordaCampo)); // Borda cinza
         
         panelCentro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -116,21 +118,21 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
             });
         };
 
-        // aplica style
-        estiloPrimario.accept(btnRelatório); // Botão Gerar Relatório (Principal)
+        // aplicar estilos
+        estiloPrimario.accept(jToggleButton1); // Botão Gerar Relatório (Principal)
         estiloSecundario.accept(btnVoltar); // Botão Voltar (Secundário)
 
-        // adicionar botões aos painéis
-        panelBotoesEsquerda.add(btnRelatório); // Gerar Relatório
+        // adicionar botões nos painéis
+        panelBotoesEsquerda.add(jToggleButton1); // Gerar Relatório
         panelBotoesDireita.add(btnVoltar); // Voltar
 
-        // monta tudo
+        // monta painel
         getContentPane().add(panelTitulo, java.awt.BorderLayout.NORTH);
         getContentPane().add(panelCentro, java.awt.BorderLayout.CENTER);
         getContentPane().add(panelSul, java.awt.BorderLayout.SOUTH);
 
         // ajusta tamanho e visibilidade
-        this.setSize(800, 600); // Tamanho padrão
+        this.setSize(800, 600);
         this.setMinimumSize(new java.awt.Dimension(500, 400));
         this.setResizable(true);
     }
@@ -147,10 +149,10 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         TPRelatorio = new javax.swing.JTextPane();
         btnVoltar = new javax.swing.JButton();
-        btnRelatório = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Relatório Tecnologia");
+        setTitle("Relatório Fornecedor");
 
         TPRelatorio.setEnabled(false);
         TPRelatorio.setFocusable(false);
@@ -163,10 +165,10 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
             }
         });
 
-        btnRelatório.setText("Gerar Relatório");
-        btnRelatório.addActionListener(new java.awt.event.ActionListener() {
+        jToggleButton1.setText("Gerar Relatório");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRelatórioActionPerformed(evt);
+                jToggleButton1ActionPerformed(evt);
             }
         });
 
@@ -174,16 +176,16 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(19, 19, 19)
                 .addComponent(btnVoltar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRelatório)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                .addComponent(jToggleButton1)
+                .addGap(21, 21, 21))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,7 +195,7 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVoltar)
-                    .addComponent(btnRelatório))
+                    .addComponent(jToggleButton1))
                 .addGap(15, 15, 15))
         );
 
@@ -204,16 +206,16 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
 
-    private void btnRelatórioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatórioActionPerformed
-        int tam = tecnologias.size();
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        int tam = fornecedores.size();
         String relatorio = "";
         
         for (int i = 0; i < tam; i++) {
-            relatorio = relatorio + "DADOS DA TECNOLOGIA " + (i + 1) + ": " + tecnologias.getTecnologia(i).toString() + "\n\n";
+            relatorio = relatorio + "DADOS DO FORNECEDOR " + (i + 1) + ": " + fornecedores.getFornecedor(i).geraDescricao() + "\n\n";
         }
         
         TPRelatorio.setText(relatorio);
-    }//GEN-LAST:event_btnRelatórioActionPerformed
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -240,12 +242,12 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
+                
                 javax.swing.JFrame framePaiParaTeste = new javax.swing.JFrame();
-                java.util.ArrayList<Tecnologia> listaTeste = new java.util.ArrayList<>();
-                Tecnologias tecnologiasParaTeste = new Tecnologias(listaTeste);
-                java.util.ArrayList<Fornecedor> listaFornTeste = new java.util.ArrayList<>();
-                Fornecedores fornecedoresParaTeste = new Fornecedores(listaFornTeste);
-                CadastroTecnologiaDialog dialog = new CadastroTecnologiaDialog(framePaiParaTeste, true, fornecedoresParaTeste, tecnologiasParaTeste);
+                java.util.ArrayList<Fornecedor> listaTeste = new java.util.ArrayList<>();
+                Fornecedores fornecedoresParaTeste = new Fornecedores(listaTeste);
+                CadastroFornecedorDialog dialog = new CadastroFornecedorDialog(framePaiParaTeste, true, fornecedoresParaTeste);
+                
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -259,8 +261,8 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextPane TPRelatorio;
-    private javax.swing.JButton btnRelatório;
     private javax.swing.JButton btnVoltar;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
