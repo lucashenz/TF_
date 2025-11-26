@@ -62,28 +62,32 @@ public class TelaInicial extends javax.swing.JFrame {
         // --- 4. PAINEL CENTRAL (BOTÕES) ---
         javax.swing.JPanel panelBotoes = new javax.swing.JPanel();
         panelBotoes.setBackground(corFundo);
-        panelBotoes.setLayout(new java.awt.GridLayout(5, 1, 0, 20));
-        panelBotoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 325, 30, 325));
 
-        java.awt.Dimension tamBotao = new java.awt.Dimension(200, 30); 
+        panelBotoes.setLayout(new javax.swing.BoxLayout(panelBotoes, javax.swing.BoxLayout.Y_AXIS));
+        // Ajuste no padding para focar no centramento
+        panelBotoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 100, 20, 100)); // Padding horizontal menor
+        panelBotoes.setAlignmentX(CENTER_ALIGNMENT); // Centraliza o painel dentro do BorderLayout.CENTER
 
-        // Função para aplicar o estilo principal
+        // Definição de tamanho para os botões: 300 de largura por 70 de altura
+        java.awt.Dimension tamBotao = new java.awt.Dimension(300, 70);
+
         java.util.function.Consumer<javax.swing.JButton> aplicarEstilo = (botao) -> {
             botao.setPreferredSize(tamBotao);
+            botao.setMinimumSize(tamBotao); // Garante a altura mínima
+            botao.setMaximumSize(tamBotao); // Garante que a largura e altura não excedam
+            
             botao.setFont(fonteBotao);
             botao.setBackground(corPrimaria);
             botao.setForeground(corTextoBotao);
             botao.setFocusPainted(false);
-            
-            // --- CORREÇÃO PARA MACOS ---
-            // Force o botão a desenhar seu próprio fundo.
             botao.setOpaque(true); 
-            // --- FIM DA CORREÇÃO ---
-            
             botao.setBorderPainted(false);
             botao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+            
+            // Adiciona a centralização no eixo X para o BoxLayout
+            botao.setAlignmentX(CENTER_ALIGNMENT); 
 
-            // Efeito Hover
+            // Hover
             botao.addMouseListener(new java.awt.event.MouseAdapter() {
                 public void mouseEntered(java.awt.event.MouseEvent evt) {
                     botao.setBackground(corHover);
@@ -94,22 +98,27 @@ public class TelaInicial extends javax.swing.JFrame {
             });
         };
 
-        // Aplica o estilo
+        // Aplica o estilo, incluindo os tamanhos e o alinhamento central
         aplicarEstilo.accept(btnFornecedores);
         aplicarEstilo.accept(btnTecnologia);
         aplicarEstilo.accept(btnCompradores);
         aplicarEstilo.accept(btnVendas);
         aplicarEstilo.accept(btnConsulta);
         aplicarEstilo.accept(btnDados);
+        
 
+        // adiciona botões com espaçamento vertical
         panelBotoes.add(btnFornecedores);
+        panelBotoes.add(javax.swing.Box.createVerticalStrut(20));
         panelBotoes.add(btnTecnologia);
+        panelBotoes.add(javax.swing.Box.createVerticalStrut(20));
         panelBotoes.add(btnCompradores);
+        panelBotoes.add(javax.swing.Box.createVerticalStrut(20));
         panelBotoes.add(btnVendas);
+        panelBotoes.add(javax.swing.Box.createVerticalStrut(20));
         panelBotoes.add(btnConsulta);
+        panelBotoes.add(javax.swing.Box.createVerticalStrut(20));
         panelBotoes.add(btnDados);
-
-
         
         // --- 5. PAINEL SUL (BOTÃO FECHAR) ---
         javax.swing.JPanel panelFechar = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
@@ -148,9 +157,10 @@ public class TelaInicial extends javax.swing.JFrame {
 
         
         // --- 7. TAMANHO DA JANELA ---
-        this.setSize(1024, 600);
-        this.setMinimumSize(new java.awt.Dimension(600, 500));
-        this.setResizable(false);
+        
+        this.setSize(1024, 800); 
+        this.setMinimumSize(new java.awt.Dimension(600, 700)); 
+        this.setResizable(true); 
         this.setLocationRelativeTo(null);
     }
 
@@ -228,53 +238,17 @@ public class TelaInicial extends javax.swing.JFrame {
             }
         });
 
+        // Removido o GroupLayout gerado para evitar conflitos com o Border/BoxLayout manual no construtor
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-            getContentPane().setLayout(layout);
-            layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(111, 111, 111)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCompradores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnTecnologia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFinalizar)
-                    .addGap(36, 36, 36))
-            );
-
-            layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addGap(22, 22, 22)
-                    .addComponent(jLabel1)
-                    .addGap(33, 33, 33)
-                    .addComponent(btnFornecedores, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(19, 19, 19)
-                    .addComponent(btnTecnologia)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnCompradores)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnVendas)
-                    .addGap(18, 18, 18)
-                    .addComponent(btnConsulta)
-                    .addGap(18, 18, 18)   
-                    .addComponent(btnDados)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                            .addComponent(btnFinalizar)
-                            .addGap(24, 24, 24))
-                        .addGroup(layout.createSequentialGroup()
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-            );
-
-
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

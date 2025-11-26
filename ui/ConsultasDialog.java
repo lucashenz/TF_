@@ -130,7 +130,17 @@ public class ConsultasDialog extends JDialog {
     // ====================== MÉTODOS A IMPLEMENTAR ======================
     private void tecnologiaComMaiorValor() {
         Tecnologia tec = tecnologias.getTecnologiaComMaiorValor();
-        JOptionPane.showMessageDialog(this, "Tecnologia com maior valor." + tec.toString());
+
+        if (tec == null) {
+            JOptionPane.showMessageDialog(this,
+                    "Nenhuma tecnologia cadastrada.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        JOptionPane.showMessageDialog(this,
+                "Tecnologia com maior valor:\n" + tec.toString());
     }
 
     private void fornecedorComMaiorNumeroDeTecnologias() {

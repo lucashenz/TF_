@@ -38,4 +38,8 @@ public class Comprador extends Participante{
     public String geraDescricao() {
         return super.geraDescricao() + "; \nEmail: " + email + "; \nPaís: " + pais;
     }
+
+    public String toCSVString() {
+        return getCod() + ";" + getNome() + ";" + getPais() + ";" + getEmail(); 
+    }
 }

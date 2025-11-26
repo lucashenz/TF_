@@ -93,4 +93,14 @@ public class Tecnologia {
         
         return "\nID: " + id + "; \nModelo: " + modelo + "; \nDescrição: " + descricao + "; \nValor base: " + valorBase + "; \nPeso: " + peso + "; \nTemperatura: " + temperatura + "; \nFornecedor: " + fornecedor.getNome();
     }
+
+    public String toCSVString() {
+        Fornecedor f = getFornecedor(); 
+        long codFornecedor = (f != null) ? f.getCod() : 0;
+        
+        return getId() + ";" + getModelo() + ";" + getDescricao() + ";" + 
+            getValorBase() + ";" + getPeso() + ";" + getTemperatura() + ";" +
+            codFornecedor; // Chave estrangeira
+    }
+    
 }

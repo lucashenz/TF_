@@ -65,4 +65,18 @@ public class Venda {
     public void calculaValorFinal(Queue<Venda> FilaDevendas) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
+    // Dentro de entidades/Venda.java
+    public String toCSVString() {
+        // Inclui atributos próprios: num, data, valorFinal
+        // Também precisa do código do Comprador e do ID da Tecnologia
+        Comprador c = getComprador(); // Supondo que você tenha o método getComprador()
+        Tecnologia t = getTecnologia(); // Supondo que você tenha o método getTecnologia()
+        
+        long codComprador = (c != null) ? c.getCod() : 0;
+        long idTecnologia = (t != null) ? t.getId() : 0;
+        
+        return getNum() + ";" + getData().getTime() + ";" + getNum() + ";" +
+            codComprador + ";" + idTecnologia; // Chaves estrangeiras
+    }
 }

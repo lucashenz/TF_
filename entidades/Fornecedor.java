@@ -45,4 +45,8 @@ public class Fornecedor extends Participante{
     public String toString() {
         return "Fornecedor{" + "fundacao=" + fundacao + ", area=" + area + '}';
     }
+
+    public String toCSVString() {
+        return getCod() + ";" + getNome() + ";" + getFundacao().getTime() + ";" + getArea();
+    }
 }
