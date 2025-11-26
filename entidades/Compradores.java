@@ -6,6 +6,8 @@ package entidades;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  *
@@ -30,20 +32,61 @@ public class Compradores {
         for (int i = 0; i < compradores.size(); i++) {
             Comprador comp = compradores.get(i);
 
-            // verifica duplicidade de ID
+
             if (comp.getCod() == p.getCod())
                 throw new IllegalArgumentException("Código de usuário repetido, tente novamente.");
 
-            // insere já ordenado
+
             if (p.getCod() < comp.getCod()) {
                 compradores.add(i, p);
                 return true;
             }
         }
 
-        // se está aqui e nao retornou true, lista vazia. add.
+
         compradores.add(p);
         return true;
+    }
+    public void alteraDadosComprador(Comprador p, long codigoSolicitadoComprador){
+        try {
+            Iterator<Comprador> it = compradores.iterator();
+
+            while (it.hasNext()) {
+                Comprador comp = it.next();
+
+                if (comp.getCod() == codigoSolicitadoComprador) {
+                    System.out.println(codigoSolicitadoComprador);
+
+                    Scanner sc = new Scanner(System.in);
+                    System.out.println("Digite o novo nome do comprador: ");
+                    comp.setNome(sc.next());
+
+                    System.out.println("Digite o novo pais do comprador: ");
+                    comp.setPais(sc.next());
+
+                    System.out.println("Digite o novo email do comprador: ");
+                    comp.setEmail(sc.next());
+
+                    System.out.println("Dados alterados com sucesso! ");
+                    return;
+
+                }
+            }
+        }catch (Exception e){
+            System.out.println("Erro ao alterar dados do comprador: "+e.getMessage());
+        }
+
+    }
+
+    public Comprador buscarCompradorPorCodigo(long codigo) {
+        for (Comprador c : compradores) { // assumindo que a lista se chama 'compradores'
+            if (c.getCod() == codigo) {
+                return c;
+            }
+        }
+
+        System.err.println("AVISO: Comprador não encontrado → Código: " + codigo + " (venda ignorada)");
+        return null;
     }
 
     @Override

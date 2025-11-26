@@ -17,7 +17,7 @@ public class Tecnologia {
     private double temperatura;
     private Fornecedor fornecedor;
     private boolean foiVendida;
-    
+
     public Tecnologia(long id, String modelo, String descricao, double valorBase, double peso, double temperatura, Fornecedor fornecedor) {
         this.id = id;
         this.modelo = modelo;
@@ -57,6 +57,10 @@ public class Tecnologia {
         return fornecedor;
     }
 
+    public boolean isFoiVendida() {
+        return foiVendida;
+    }
+
     public void setId(long id) {
         this.id = id;
     }
@@ -81,6 +85,10 @@ public class Tecnologia {
         this.temperatura = temperatura;
     }
 
+    public void setFoiVendida(boolean foiVendida) {
+        this.foiVendida = foiVendida;
+    }
+
     public void defineFornecedor(Fornecedor f) {
         this.fornecedor = f;
     }
@@ -90,17 +98,16 @@ public class Tecnologia {
         if (this.fornecedor == null){
             return "\nID: " + id + "; \nModelo: " + modelo + "; \nDescrição: " + descricao + "; \nValor base: " + valorBase + "; \nPeso: " + peso + "; \nTemperatura: " + temperatura + "; \nNenhum fornecedor vinculado.";
         }
-        
-        return "\nID: " + id + "; \nModelo: " + modelo + "; \nDescrição: " + descricao + "; \nValor base: " + valorBase + "; \nPeso: " + peso + "; \nTemperatura: " + temperatura + "; \nFornecedor: " + fornecedor.getNome();
+
+        return "\nID: " + id + "; \nModelo: " + modelo + "; \nDescrição: " + descricao + "; \nValor base: " + valorBase + "; \nPeso: " + peso + "; \nTemperatura: " + temperatura + "; \nFornecedor: \n  -Nome fornecedor: " + fornecedor.getNome() + "\n  -Data de fundação fornecedor: " + fornecedor.getFundacao() + "\n  -Área do fornecedor: " + fornecedor.getArea() + "\n  -ID fornecedor: " + fornecedor.getCod();
     }
 
     public String toCSVString() {
-        Fornecedor f = getFornecedor(); 
+        Fornecedor f = getFornecedor();
         long codFornecedor = (f != null) ? f.getCod() : 0;
-        
-        return getId() + ";" + getModelo() + ";" + getDescricao() + ";" + 
-            getValorBase() + ";" + getPeso() + ";" + getTemperatura() + ";" +
-            codFornecedor; // Chave estrangeira
+
+        return getId() + ";" + getModelo() + ";" + getDescricao() + ";" +
+                getValorBase() + ";" + getPeso() + ";" + getTemperatura() + ";" +
+                codFornecedor; // Chave estrangeira
     }
-    
 }

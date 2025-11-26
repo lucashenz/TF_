@@ -3,32 +3,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package ui;
-import entidades.*;
 
+import entidades.*;
 
 /**
  *
  * @author arthurzimmer
  */
 public class RelatorioCompradorDialog extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioCompradorDialog.class.getName());
     private Compradores compradores;
     /**
      * Creates new form RelatorioCompradorDialog
      */
     public RelatorioCompradorDialog(java.awt.Frame parent, boolean modal, Compradores listaCompradores) {
-        super(parent, modal);        
-        initComponents();        
+        super(parent, modal);
+        initComponents();
         this.compradores = listaCompradores;
 
-        java.awt.Color corFundo = java.awt.Color.WHITE; 
+        java.awt.Color corFundo = java.awt.Color.WHITE;
         java.awt.Color corPrimaria = new java.awt.Color(0, 80, 160); // Azul
         java.awt.Color corHover = new java.awt.Color(0, 60, 130); // Azul escuro
-        java.awt.Color corTextoBotao = java.awt.Color.WHITE; 
+        java.awt.Color corTextoBotao = java.awt.Color.WHITE;
         java.awt.Color corSecundaria = new java.awt.Color(220, 220, 220); // Cinza
         java.awt.Color corSecundariaHover = new java.awt.Color(200, 200, 200);
-        java.awt.Color corTextoSecundario = new java.awt.Color(50, 50, 50); 
+        java.awt.Color corTextoSecundario = new java.awt.Color(50, 50, 50);
         java.awt.Color corBordaCampo = new java.awt.Color(200, 200, 200);
         java.awt.Color corFundoRelatorio = new java.awt.Color(248, 248, 248); // Fundo quase branco
 
@@ -40,32 +40,32 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         getContentPane().removeAll();
         getContentPane().setLayout(new java.awt.BorderLayout());
         getContentPane().setBackground(corFundo);
-        
+
         // titulo
         javax.swing.JPanel panelTitulo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         panelTitulo.setBackground(corFundo);
         panelTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 25, 15, 25));
-        
+
         javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Compradores");
         lblTitulo.setFont(fonteTitulo);
         lblTitulo.setForeground(corPrimaria);
         panelTitulo.add(lblTitulo);
-        
+
         // relatorio
         javax.swing.JPanel panelCentro = new javax.swing.JPanel(new java.awt.BorderLayout());
         panelCentro.setBackground(corFundo);
         panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 25, 20, 25)); // Padding
-        
+
         // rext pane relatorio
-        TPRelatorio.setEditable(false); 
+        TPRelatorio.setEditable(false);
         TPRelatorio.setFont(fonteRelatorio);
         TPRelatorio.setBackground(corFundoRelatorio);
         TPRelatorio.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding interno
-        
+
         // scroll pane relatorio
         jScrollPane1.setViewportView(TPRelatorio);
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(corBordaCampo)); // Borda cinza
-        
+
         panelCentro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         // botoes
@@ -75,7 +75,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
 
         javax.swing.JPanel panelBotoesEsquerda = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
         panelBotoesEsquerda.setBackground(corFundo);
-        
+
         javax.swing.JPanel panelBotoesDireita = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 0));
         panelBotoesDireita.setBackground(corFundo);
 
@@ -174,28 +174,28 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(23, 23, 23))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1)
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 163, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(23, 23, 23))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
-                .addGap(15, 15, 15))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(jButton1)
+                                        .addComponent(jButton2))
+                                .addGap(15, 15, 15))
         );
 
         pack();
@@ -206,15 +206,23 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int tam = compradores.size();
-        String relatorio = "";
-        
-        for (int i = 0; i < tam; i++) {
-            relatorio = relatorio + "DADOS DO COMPRADOR " + (i + 1) + ": " + compradores.getComprador(i).geraDescricao() + "\n\n";
-        }
-        
-        TPRelatorio.setText(relatorio);
+        geraRelatorio();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void geraRelatorio() {
+        if (compradores.size() == 0) {
+            TPRelatorio.setText("Nenhum comprador cadastrado.");
+        } else {
+            int tam = compradores.size();
+            String relatorio = "";
+
+            for (int i = 0; i < tam; i++) {
+                relatorio = relatorio + "DADOS DO COMPRADOR " + (i + 1) + ": " + compradores.getComprador(i).geraDescricao() + "\n\n";
+            }
+
+            TPRelatorio.setText(relatorio);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -223,7 +231,7 @@ public class RelatorioCompradorDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

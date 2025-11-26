@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
  */
 package ui;
+
 import entidades.*;
 
 /**
@@ -10,24 +11,24 @@ import entidades.*;
  * @author arthurzimmer
  */
 public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(RelatorioTecnologiaDialog.class.getName());
     private Tecnologias tecnologias;
     /**
      * Creates new form RelatorioTecnologiaDialog
      */
     public RelatorioTecnologiaDialog(java.awt.Frame parent, boolean modal, Tecnologias listaTecnologias) {
-        super(parent, modal);        
-        initComponents();        
+        super(parent, modal);
+        initComponents();
         this.tecnologias = listaTecnologias;
 
-        java.awt.Color corFundo = java.awt.Color.WHITE; 
+        java.awt.Color corFundo = java.awt.Color.WHITE;
         java.awt.Color corPrimaria = new java.awt.Color(0, 80, 160); // Azul
         java.awt.Color corHover = new java.awt.Color(0, 60, 130); // Azul escuro
-        java.awt.Color corTextoBotao = java.awt.Color.WHITE; 
+        java.awt.Color corTextoBotao = java.awt.Color.WHITE;
         java.awt.Color corSecundaria = new java.awt.Color(220, 220, 220); // Cinza
         java.awt.Color corSecundariaHover = new java.awt.Color(200, 200, 200);
-        java.awt.Color corTextoSecundario = new java.awt.Color(50, 50, 50); 
+        java.awt.Color corTextoSecundario = new java.awt.Color(50, 50, 50);
         java.awt.Color corBordaCampo = new java.awt.Color(200, 200, 200);
         java.awt.Color corFundoRelatorio = new java.awt.Color(248, 248, 248); // Fundo quase branco
 
@@ -39,32 +40,32 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         getContentPane().removeAll();
         getContentPane().setLayout(new java.awt.BorderLayout());
         getContentPane().setBackground(corFundo);
-        
+
         // titulo
         javax.swing.JPanel panelTitulo = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT));
         panelTitulo.setBackground(corFundo);
         panelTitulo.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 25, 15, 25));
-        
+
         javax.swing.JLabel lblTitulo = new javax.swing.JLabel("Relatório de Tecnologia");
         lblTitulo.setFont(fonteTitulo);
         lblTitulo.setForeground(corPrimaria);
         panelTitulo.add(lblTitulo);
-        
+
         // relatorio
         javax.swing.JPanel panelCentro = new javax.swing.JPanel(new java.awt.BorderLayout());
         panelCentro.setBackground(corFundo);
         panelCentro.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 25, 20, 25)); // Padding
-        
+
         // text pane relatorio
-        TPRelatorio.setEditable(false); 
+        TPRelatorio.setEditable(false);
         TPRelatorio.setFont(fonteRelatorio);
         TPRelatorio.setBackground(corFundoRelatorio);
         TPRelatorio.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Padding interno
-        
+
         // scrollpane relatorio
         jScrollPane1.setViewportView(TPRelatorio);
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(corBordaCampo)); // Borda cinza
-        
+
         panelCentro.add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         // botões
@@ -74,7 +75,7 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
 
         javax.swing.JPanel panelBotoesEsquerda = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 0));
         panelBotoesEsquerda.setBackground(corFundo);
-        
+
         javax.swing.JPanel panelBotoesDireita = new javax.swing.JPanel(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT, 10, 0));
         panelBotoesDireita.setBackground(corFundo);
 
@@ -174,28 +175,28 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(btnVoltar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRelatório)
-                .addGap(20, 20, 20))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                                .addContainerGap())
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(btnVoltar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRelatório)
+                                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVoltar)
-                    .addComponent(btnRelatório))
-                .addGap(15, 15, 15))
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addGap(40, 40, 40)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnVoltar)
+                                        .addComponent(btnRelatório))
+                                .addGap(15, 15, 15))
         );
 
         pack();
@@ -206,15 +207,23 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnVoltarActionPerformed
 
     private void btnRelatórioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRelatórioActionPerformed
-        int tam = tecnologias.size();
-        String relatorio = "";
-        
-        for (int i = 0; i < tam; i++) {
-            relatorio = relatorio + "DADOS DA TECNOLOGIA " + (i + 1) + ": " + tecnologias.getTecnologia(i).toString() + "\n\n";
-        }
-        
-        TPRelatorio.setText(relatorio);
+        geraDescricao();
     }//GEN-LAST:event_btnRelatórioActionPerformed
+
+    public void geraDescricao() {
+        if (tecnologias.size() == 0) {
+            TPRelatorio.setText("Nenhuma tecnologia foi cadastrada.");
+        } else {
+            int tam = tecnologias.size();
+            String relatorio = "";
+
+            for (int i = 0; i < tam; i++) {
+                relatorio = relatorio + "DADOS DA TECNOLOGIA " + (i + 1) + ": " + tecnologias.getTecnologia(i).toString() + "\n\n";
+            }
+
+            TPRelatorio.setText(relatorio);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -223,7 +232,7 @@ public class RelatorioTecnologiaDialog extends javax.swing.JDialog {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {

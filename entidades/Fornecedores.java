@@ -46,7 +46,7 @@ public class Fornecedores {
         return true;
     }
 
-    public Fornecedor buscarFornecedorPorCodigo(int codFornecedor){
+    public Fornecedor buscarFornecedorPorCodigo(long codFornecedor){
         for (Fornecedor fornecedor : fornecedores) {
             if (fornecedor.getCod() == codFornecedor) {
                 return fornecedor;

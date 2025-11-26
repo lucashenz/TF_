@@ -11,11 +11,13 @@ package entidades;
 public class Comprador extends Participante{
     private String pais;
     private String email;
-        
+    private int comprasRealizadas;
+
     public Comprador(long cod, String nome, String pais, String email) {
         super(cod, nome);
         this.email = email;
         this.pais = pais;
+        this.comprasRealizadas = 0;
     }
 
     public String getEmail() {
@@ -26,6 +28,14 @@ public class Comprador extends Participante{
         return pais;
     }
 
+    public void setComprasRealizadas(int comprasRealizadas) {
+        this.comprasRealizadas = comprasRealizadas;
+    }
+
+    public int getComprasRealizadas() {
+        return comprasRealizadas;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -34,12 +44,21 @@ public class Comprador extends Participante{
         this.pais = pais;
     }
 
+    public int incrementaCompra() {
+        int compra = this.comprasRealizadas;
+        compra++;
+
+        return compra;
+    }
+
+
+
     @Override
     public String geraDescricao() {
         return super.geraDescricao() + "; \nEmail: " + email + "; \nPaís: " + pais;
     }
 
     public String toCSVString() {
-        return getCod() + ";" + getNome() + ";" + getPais() + ";" + getEmail(); 
+        return getCod() + ";" + getNome() + ";" + getPais() + ";" + getEmail();
     }
 }

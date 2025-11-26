@@ -2,6 +2,8 @@ package aplicacao;
 
 import entidades.*;
 import ui.TelaInicial;
+
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 import java.io.BufferedReader;
@@ -17,6 +19,7 @@ import java.util.logging.Logger;
 
 
 import static java.nio.file.Files.newBufferedReader;
+
 
 public class ACMETech {
     // Logger para persistência (movido de PersistenciaUtils)
@@ -36,163 +39,187 @@ public class ACMETech {
         this.vendas = new Vendas(new ArrayList<>());
     }
 
-    // ... (Método inicializar() - Sem alterações) ...
     public void inicializar() {
-        // Inicializa listas vazias (caso não tenha sido feito no construtor)
+        Locale.setDefault(new Locale("en", "US")); // Garante que double usa ponto
         this.fornecedores = new Fornecedores(new ArrayList<>());
         this.tecnologias = new Tecnologias(new ArrayList<>());
         this.compradores = new Compradores(new ArrayList<>());
         this.vendas = new Vendas(new ArrayList<>());
 
-
-        Path pathParticipantes = Paths.get("PARTICIPANTESENTRADA.CSV");
-        try (BufferedReader br = newBufferedReader(pathParticipantes, Charset.forName("UTF-8"))) {
+        // ===================== PARTICIPANTESENTRADA.CSV =====================
+        Path pathParticipantes = Paths.get("dados/PARTICIPANTESENTRADA.CSV");
+        try (BufferedReader br = Files.newBufferedReader(pathParticipantes, StandardCharsets.UTF_8)) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                if (linha.startsWith("cod")) continue;
-                Scanner sc = new Scanner(linha).useDelimiter(";");
+                linha = linha.trim();
+                if (linha.isEmpty() || linha.startsWith("cod")) continue;
 
-                long cod = sc.nextLong();
-                String nome = sc.next();
-                int tipo = sc.nextInt();
+                String[] partes = linha.split(";", -1); // -1 mantém campos vazios
 
-                if (tipo == 1) {
-                    String fundacaoStr = sc.next();
-                    String areaStr = sc.next();
-                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                if (partes.length < 5) {
+                    System.err.println("Linha inválida em PARTICIPANTESENTRADA.CSV: " + linha);
+                    continue;
+                }
 
-                    Date fundacao = null;
-                    try {
-                        fundacao = sdf.parse(fundacaoStr);
-                    } catch (ParseException e) {
-                        System.err.println("Formato de data inválido em PARTICIPANTESENTRADA.CSV: " + fundacaoStr);
-                        continue;
+                try {
+                    long cod = Long.parseLong(partes[0].trim());
+                    String nome = partes[1].trim();
+                    int tipo = Integer.parseInt(partes[2].trim());
+
+                    if (tipo == 1) { // Fornecedor
+                        String fundacaoStr = partes[3].trim();
+                        String areaStr = partes[4].trim();
+
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        Date fundacao = sdf.parse(fundacaoStr);
+
+                        Area areaEnum = Area.valueOf(areaStr.toUpperCase());
+                        fornecedores.addFornecedor(new Fornecedor(cod, nome, fundacao, areaEnum));
+
+                    } else if (tipo == 2) { // Comprador
+                        String pais = partes[3].trim();
+                        String email = partes[4].trim();
+                        compradores.addComprador(new Comprador(cod, nome, pais, email));
                     }
 
-                    Area areaEnum;
-                    try {
-                        areaEnum = Area.valueOf(areaStr.trim().toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        System.err.println("Área inválida no CSV: " + areaStr + " — valores válidos: TI, ANDROIDES, EMERGENTE, ALIMENTOS");
-                        continue;
-                    }
-
-                    fornecedores.addFornecedor(new Fornecedor(cod, nome, fundacao, areaEnum));
-                } else if (tipo == 2) {
-                    String pais = sc.next();
-                    String email = sc.next();
-                    compradores.addComprador(new Comprador(cod, nome, pais, email));
-                } else {
-                    throw new IOException("Tipo de participante inválido.");
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar linha (Participantes): " + linha);
+                    System.err.println("   → " + e.getMessage());
                 }
             }
         } catch (IOException e) {
             System.err.println("Erro ao ler PARTICIPANTESENTRADA.CSV: " + e.getMessage());
         }
 
-        Path pathTecnologias = Paths.get("TECNOLOGIASENTRADA.CSV");
-        try (BufferedReader br = newBufferedReader(pathTecnologias, Charset.forName("UTF-8"))) {
+        // ===================== TECNOLOGIASENTRADA.CSV =====================
+        Path pathTecnologias = Paths.get("dados/TECNOLOGIASENTRADA.CSV");
+        try (BufferedReader br = Files.newBufferedReader(pathTecnologias, StandardCharsets.UTF_8)) {
             String linha;
             while ((linha = br.readLine()) != null) {
-                if (linha.startsWith("id")) continue;
-                Scanner sc = new Scanner(linha).useDelimiter(";");
+                linha = linha.trim();
+                if (linha.isEmpty() || linha.startsWith("id")) continue;
 
-                long id = sc.nextLong(); 
-                String modelo = sc.next();
-                String descricao = sc.next();
-                double valorBase = sc.nextDouble();
-                double peso = sc.nextDouble();
-                double temperatura = sc.nextDouble();
-                String codFornecedorStr = sc.hasNext() ? sc.next() : "";
-                Fornecedor fornecedor = null;
+                String[] partes = linha.split(";", -1);
 
-                if (!codFornecedorStr.isEmpty()) {
-                    try {
-                        long codFornecedor = Long.parseLong(codFornecedorStr); 
-                        // Corrigido: buscarFornecedorPorCodigo deve aceitar long
-                        fornecedor = fornecedores.buscarFornecedorPorCodigo((int)codFornecedor); 
-                    } catch (NumberFormatException e) {
-                        System.err.println("Código de fornecedor inválido em TECNOLOGIASENTRADA.CSV: " + codFornecedorStr);
-                    }
+                if (partes.length < 6) {
+                    System.err.println("Linha inválida em TECNOLOGIASENTRADA.CSV: " + linha);
+                    continue;
                 }
-                Tecnologia t = new Tecnologia(id, modelo, descricao, valorBase, peso, temperatura, fornecedor);
-                tecnologias.addTecnologia(t);
+
+                try {
+                    long id = Long.parseLong(partes[0].trim());
+                    String modelo = partes[1].trim();
+                    String descricao = partes[2].trim();
+                    double valorBase = Double.parseDouble(partes[3].trim().replace(",", "."));
+                    double peso = Double.parseDouble(partes[4].trim().replace(",", "."));
+                    double temperatura = Double.parseDouble(partes[5].trim().replace(",", "."));
+
+                    Fornecedor fornecedor = null;
+                    if (partes.length > 6 && !partes[6].trim().isEmpty()) {
+                        long codForn = Long.parseLong(partes[6].trim());
+                        fornecedor = fornecedores.buscarFornecedorPorCodigo(codForn);
+                        if (fornecedor == null) {
+                            System.err.println("Fornecedor não encontrado (ID " + codForn + "): " + linha);
+                        }
+                    }
+
+                    Tecnologia t = new Tecnologia(id, modelo, descricao, valorBase, peso, temperatura, fornecedor);
+                    tecnologias.addTecnologia(t);
+
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar tecnologia: " + linha);
+                    System.err.println("   → " + e.getMessage());
+                }
             }
-        }catch (IOException e){
-            System.err.println("Erro ao ler TECNOLOGIAS.CSV: " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("Erro ao ler TECNOLOGIASENTRADA.CSV: " + e.getMessage());
         }
 
-        Path pathVendas = Paths.get("VENDASENTRADA.CSV");
-        Queue<Venda> FilaDevendas = new LinkedList<>();
-        try (BufferedReader br = Files.newBufferedReader(pathVendas, Charset.forName("UTF-8"))) {
+        // ===================== VENDASENTRADA.CSV =====================
+        Path pathVendas = Paths.get("dados/VENDASENTRADA.CSV");
+        Queue<Venda> filaDeVendas = new LinkedList<>();
+        try (BufferedReader br = Files.newBufferedReader(pathVendas, StandardCharsets.UTF_8)) {
             String linha;
-            while((linha= br.readLine())!=null){
-                Scanner sc = new Scanner(linha).useDelimiter(";");
+            while ((linha = br.readLine()) != null) {
+                linha = linha.trim();
+                if (linha.isEmpty()) continue;
 
-                long num = sc.nextLong(); 
-                String data = sc.next();
-                
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                sdf.setLenient(false);
-
-                Date dataAux;
-                try {
-                    dataAux = sdf.parse(data);
-                } catch (ParseException e) {
-                    throw new IllegalArgumentException("Data inválida: " + data + ". Use o formato dd/MM/yyyy");
+                String[] partes = linha.split(";", -1);
+                if (partes.length < 4) {
+                    System.err.println("Linha inválida em VENDASENTRADA.CSV: " + linha);
+                    continue;
                 }
-                
-                long codComprador = sc.nextLong(); 
-                long idTecnologia = sc.nextLong(); 
 
-                Comprador comprador = buscarCompradorPorCodigo(codComprador);
-                Tecnologia tecnologia = buscarTecnologiaPorId(idTecnologia);
+                try {
+                    long num = Long.parseLong(partes[0].trim());
+                    String dataStr = partes[1].trim();
+                    long codComprador = Long.parseLong(partes[2].trim());
+                    long idTecnologia = Long.parseLong(partes[3].trim());
 
-                Venda v = new Venda(comprador, tecnologia, num, dataAux);
-                v.calculaValorFinal(FilaDevendas);
-                vendas.addVenda(v); 
-                FilaDevendas.add(v); 
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                    sdf.setLenient(false);
+                    Date data = sdf.parse(dataStr);
+
+                    Comprador comprador = compradores.buscarCompradorPorCodigo(codComprador);
+                    Tecnologia tecnologia = tecnologias.buscarTecnologiaPorId(idTecnologia);
+
+                    if (comprador == null) {
+                        System.err.println("Comprador não encontrado (código " + codComprador + "): " + linha);
+                        continue;
+                    }
+                    if (tecnologia == null) {
+                        System.err.println("Tecnologia não encontrada (ID " + idTecnologia + "): " + linha);
+                        continue;
+                    }
+
+                    Venda v = new Venda(comprador, tecnologia, num, data);
+                    v.calculaValorFinal(filaDeVendas);
+                    vendas.addVenda(v);
+                    filaDeVendas.add(v);
+
+                } catch (Exception e) {
+                    System.err.println("Erro ao processar venda: " + linha);
+                    System.err.println("   → " + e.getMessage());
+                }
             }
-        }catch(IOException e){
+        } catch (IOException e) {
             System.err.println("Erro ao ler VENDASENTRADA.CSV: " + e.getMessage());
         }
     }
 
-
     public void executar() {
         inicializar();
-        // A TelaInicial deve ser instanciada com as listas gerenciadas por ACMETech
         TelaInicial panel = new TelaInicial();
         panel.setVisible(true);
     }
-    
+
     // -----------------------------------------------------------------
     // Lógica de Persistência (Movida de PersistenciaUtils)
     // -----------------------------------------------------------------
-    
+
     /**
      * Salva todos os dados em um arquivo CSV, usando os atributos da classe ACMETech.
      * ASSINATURA CORRIGIDA: Não recebe as listas como parâmetros, pois elas já são atributos da classe.
      */
-     public void salvarDadosEmCSV(
+    public void salvarDadosEmCSV(
             String nomeArquivo,
             Fornecedores fornecedores,
             Tecnologias tecnologias,
             Compradores compradores,
             Vendas vendas
     ) throws IOException {
-        
+
         String nomeCompleto = nomeArquivo + ".csv";
-        
+
         try (FileWriter writer = new FileWriter(nomeCompleto)) {
-            
+
             // --- Seção 1: FORNECEDORES ---
             writer.append("---ENTIDADE:FORNECEDOR---\n");
             // Cabeçalho: [Participante: cod, nome] + [Fornecedor: fundacao]
             writer.append("cod" + SEPARADOR + "nome" + SEPARADOR + "fundacao (timestamp)\n");
             for (Object f : fornecedores.getFornecedores()) {
-                writer.append(((Fornecedor)f).toCSVString() + "\n"); 
-                System.out.println("[DEBUG] Salvando fornecedor: " + ((Fornecedor)f).toCSVString());
+                writer.append(((Fornecedor) f).toCSVString() + "\n");
+                System.out.println("[DEBUG] Salvando fornecedor: " + ((Fornecedor) f).toCSVString());
             }
             writer.append("\n");
 
@@ -200,9 +227,9 @@ public class ACMETech {
             writer.append("---ENTIDADE:COMPRADOR---\n");
             // Cabeçalho: [Participante: cod, nome] + [Comprador: pais, email]
             writer.append("cod" + SEPARADOR + "nome" + SEPARADOR + "pais" + SEPARADOR + "email\n");
-            if(compradores.getCompradores() != null){
+            if (compradores.getCompradores() != null) {
                 for (Object c : compradores.getCompradores()) {
-                    writer.append(((Comprador)c).toCSVString() + "\n");
+                    writer.append(((Comprador) c).toCSVString() + "\n");
                 }
                 writer.append("\n");
             } else {
@@ -212,55 +239,117 @@ public class ACMETech {
             // --- Seção 3: TECNOLOGIAS ---
             writer.append("---ENTIDADE:TECNOLOGIA---\n");
             // Cabeçalho: [Tecnologia: id, modelo, descricao, valorBase, peso, temperatura] + [FK: codFornecedor]
-            writer.append("id" + SEPARADOR + "modelo" + SEPARADOR + "descricao" + SEPARADOR + 
-                          "valorBase" + SEPARADOR + "peso" + SEPARADOR + "temperatura" + SEPARADOR + 
-                          "codFornecedor\n");
+            writer.append("id" + SEPARADOR + "modelo" + SEPARADOR + "descricao" + SEPARADOR +
+                    "valorBase" + SEPARADOR + "peso" + SEPARADOR + "temperatura" + SEPARADOR +
+                    "codFornecedor\n");
             for (Object t : tecnologias.getTecnologias()) {
-                writer.append(((Tecnologia)t).toCSVString() + "\n");
+                writer.append(((Tecnologia) t).toCSVString() + "\n");
             }
             writer.append("\n");
-            
+
             // --- Seção 4: VENDAS ---
             writer.append("---ENTIDADE:VENDA---\n");
             // Cabeçalho: [Venda: num, data, valorFinal] + [FK: codComprador, idTecnologia]
-            writer.append("num" + SEPARADOR + "data (timestamp)" + SEPARADOR + "valorFinal" + SEPARADOR + 
-                          "codComprador" + SEPARADOR + "idTecnologia\n");
+            writer.append("num" + SEPARADOR + "data (timestamp)" + SEPARADOR + "valorFinal" + SEPARADOR +
+                    "codComprador" + SEPARADOR + "idTecnologia\n");
             for (Object v : vendas.getVendas()) {
-                writer.append(((Venda)v).toCSVString() + "\n");
+                writer.append(((Venda) v).toCSVString() + "\n");
             }
             writer.append("\n");
-            
+
             writer.flush();
             logger.log(Level.INFO, "Dados salvos em CSV com sucesso em: {0}", nomeCompleto);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Erro ao salvar arquivo CSV", e);
-            throw e; 
+            throw e;
         }
     }
-    
-    // NOTA: Para CarregarDadosEmCSV() e JSON, a lógica deve ser implementada aqui.
-    
-    // -----------------------------------------------------------------
-    // Métodos Auxiliares
-    // -----------------------------------------------------------------
 
-    private Comprador buscarCompradorPorCodigo(long codComprador){
-         // Assumindo que Compradores tem getCompradores() que retorna List<Comprador>
-        for (Comprador comprador : this.compradores.getCompradores()) { 
-            if (comprador.getCod() == codComprador) {
-                return comprador;
-            }
-        }
-        return null;
-    }
+    public void salvarDadosEmJSON(
+            String nomeArquivo,
+            Fornecedores fornecedores,
+            Tecnologias tecnologias,
+            Compradores compradores,
+            Vendas vendas
+    ) throws IOException {
+        String nomeCompleto = nomeArquivo + ".json";
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
-    private Tecnologia buscarTecnologiaPorId(long idTecnologia){
-         // Assumindo que Tecnologias tem getTecnologias() que retorna List<Tecnologia>
-        for (Tecnologia tecnologia : this.tecnologias.getTecnologias()) { 
-            if (tecnologia.getId() == idTecnologia) {
-                return tecnologia;
+        try (FileWriter writer = new FileWriter(nomeCompleto)) {
+            writer.write("{\n");
+            writer.write("  \"fornecedores\": [\n");
+
+            boolean primeiro = true;
+            for (Object f : fornecedores.getFornecedores()) {
+                Fornecedor forn = (Fornecedor) f;
+                if (!primeiro) writer.write(",\n");
+                writer.write(String.format("    {\"cod\": %d, \"nome\": \"%s\", \"fundacao\": \"%s\", \"area\": \"%s\"}",
+                        forn.getCod(),
+                        forn.getNome().replace("\"", "\\\""),
+                        sdf.format(forn.getFundacao()),
+                        forn.getArea().toString()));
+                primeiro = false;
             }
+            if (fornecedores.getFornecedores().isEmpty()) {
+                writer.write("    {}"); // evita JSON inválido
+            }
+            writer.write("\n  ],\n");
+
+            writer.write("  \"compradores\": [\n");
+            primeiro = true;
+            for (Object c : compradores.getCompradores()) {
+                Comprador comp = (Comprador) c;
+                if (!primeiro) writer.write(",\n");
+                writer.write(String.format("    {\"cod\": %d, \"nome\": \"%s\", \"pais\": \"%s\", \"email\": \"%s\"}",
+                        comp.getCod(),
+                        comp.getNome().replace("\"", "\\\""),
+                        comp.getPais(),
+                        comp.getEmail()));
+                primeiro = false;
+            }
+            if (compradores.getCompradores().isEmpty()) writer.write("    {}");
+            writer.write("\n  ],\n");
+
+            writer.write("  \"tecnologias\": [\n");
+            primeiro = true;
+            for (Object t : tecnologias.getTecnologias()) {
+                Tecnologia tec = (Tecnologia) t;
+                if (!primeiro) writer.write(",\n");
+                String fornCod = tec.getFornecedor() != null ? String.valueOf(tec.getFornecedor().getCod()) : "null";
+                writer.write(String.format("    {\"id\": %d, \"modelo\": \"%s\", \"descricao\": \"%s\", \"valorBase\": %.2f, \"peso\": %.2f, \"temperatura\": %.2f, \"codFornecedor\": %s}",
+                        tec.getId(),
+                        tec.getModelo().replace("\"", "\\\""),
+                        tec.getDescricao().replace("\"", "\\\""),
+                        tec.getValorBase(),
+                        tec.getPeso(),
+                        tec.getTemperatura(),
+                        fornCod));
+                primeiro = false;
+            }
+            if (tecnologias.getTecnologias().isEmpty()) writer.write("    {}");
+            writer.write("\n  ],\n");
+
+            writer.write("  \"vendas\": [\n");
+            primeiro = true;
+            for (Object v : vendas.getVendas()) {
+                Venda venda = (Venda) v;
+                if (!primeiro) writer.write(",\n");
+                writer.write(String.format("    {\"numero\": %d, \"data\": \"%s\", \"valorFinal\": %.2f, \"codComprador\": %d, \"idTecnologia\": %d}",
+                        venda.getNum(),
+                        sdf.format(venda.getData()),
+                        venda.calculaValorFinal((Queue<Venda>) vendas.getVendas()),
+                        venda.getComprador().getCod(),
+                        venda.getTecnologia().getId()));
+                primeiro = false;
+            }
+            if (vendas.getVendas().isEmpty()) writer.write("    {}");
+            writer.write("\n  ]\n");
+            writer.write("}\n");
+
+            logger.log(Level.INFO, "Dados salvos em JSON com sucesso em: {0}", nomeCompleto);
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Erro ao salvar arquivo JSON", e);
+            throw e;
         }
-        return null;
     }
 }

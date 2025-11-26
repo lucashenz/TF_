@@ -53,6 +53,18 @@ public class Tecnologias {
         return tecnologias.get(t);
     }
 
+    public Tecnologia buscarTecnologiaPorId(long id) {
+        for (Tecnologia t : tecnologias) {
+            if (t.getId() == id) {
+                return t;
+            }
+        }
+
+        throw new IllegalArgumentException(
+                "ERRO: Não existe tecnologia com o ID " + id + ". Verifique o arquivo VENDASENTRADA.CSV."
+        );
+    }
+
     public Tecnologia getTecnologiaByName(String nome) {
         for (int i = 0; i < tecnologias.size(); i++) {
             if (tecnologias.get(i).getDescricao().equals(nome)) 

@@ -295,13 +295,10 @@ public class DadosDialog extends JDialog {
 
             // 2. SALVAMENTO JSON (SIMULADO)
             if (salvarJSON) {
-                String nomeCompleto = nomeArquivo + ".json";
-                // Simulação, pois a lógica real requer bibliotecas externas.
-                File arquivoSimulado = new File(nomeCompleto);
-                if (arquivoSimulado.createNewFile() || arquivoSimulado.exists()) {
-                    log("   - [OK] Dados salvos em JSON (SIMULADO: " + nomeCompleto + ").");
-                    salvamentosRealizados++;
-                }
+                log("[INFO] Iniciando salvamento em CSV...");
+                acmeTech.salvarDadosEmJSON(nomeArquivo, fornecedores, tecnologias, compradores, vendas);
+                log("   - [OK] Dados JSON escritos com sucesso.");
+                salvamentosRealizados++;
             }
 
             log("-----------------------------------------");

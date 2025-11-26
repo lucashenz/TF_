@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entidades;
-
+import entidades.*;
 
 import java.util.Date;
 import java.util.Queue;
@@ -17,6 +17,7 @@ public class Venda {
     private Tecnologia tecnologia;
     private long num;
     private Date data;
+    private double valorFinal;
 
     public Venda(Comprador comprador, Tecnologia tecnologia, long num, Date data) {
         this.comprador = comprador;
@@ -57,26 +58,61 @@ public class Venda {
         this.data = data;
     }
 
+    public void setValorFinal(double valorFinal) {
+        this.valorFinal = valorFinal;
+    }
+
+    public double calculaValorFinal(Queue<Venda> FilaDevendas) {
+        if (tecnologia == null || tecnologia.getFornecedor() == null) {
+            System.err.println("Erro: tecnologia ou fornecedor não definido para a venda" + num);
+            return 0.0;
+        }
+        double valorBase = tecnologia.getValorBase();
+        double valorAcrescido = valorBase;
+        Area areaFornecedor = tecnologia.getFornecedor().getArea();
+
+        switch (areaFornecedor) {
+            case TI:
+                valorAcrescido = valorBase * 1.2;
+                break;
+            case ANDROIDES:
+                valorAcrescido = valorBase * 1.15;
+                break;
+
+            case EMERGENTE:
+                valorAcrescido = valorBase * 1.25;
+                break;
+
+            case ALIMENTOS:
+                valorAcrescido = valorBase * 1.10;
+                break;
+            default:
+                System.err.println("Area desconhecida para vendas" + num);
+        }
+        int contadorVendas = 0;
+        for (Venda v : FilaDevendas) {
+            if (v.getComprador().equals(this.comprador) && v.getNum() != this.num) {
+                contadorVendas++;
+            }
+        }
+        return 0;
+    }
+
     @Override
     public String toString() {
-        return "Venda{" + "comprador=" + comprador + ", tecnologia=" + tecnologia + ", num=" + num + ", data=" + data + '}';
+        return "\nComprador: \n  -Nome comprador: " + comprador.getNome() + "\n  -Email comprador: " + comprador.getEmail() + "\n  -País comprador: " + comprador.getPais() + "\n  -ID comprador: " + comprador.getCod() + "; \nTecnologia: \n  -Modelo tecnologia: " + tecnologia.getModelo() + "\n  -Descrição tecnologia: " + tecnologia.getDescricao() + "\n  -Valor base tecnologia: " + tecnologia.getValorBase() + "\n  -Peso tecnologia: " + tecnologia.getPeso() + "\n  -Temperatura tecnologia: " + tecnologia.getTemperatura() + "\n   -Nome fornecedor tecnologia: " + tecnologia.getFornecedor().getNome() + "\n   -Fundação fornecedor da tecnologia:" + tecnologia.getFornecedor().getFundacao() + "\n   -Área fornecedor da tecnologia: " + tecnologia.getFornecedor().getArea() + "\n   -ID fornecedor da tecnologia: " + tecnologia.getFornecedor().getCod() + "; \nID: " + num + "; \nData: " + data + "; \nValor final: " + valorFinal;
     }
 
-    public void calculaValorFinal(Queue<Venda> FilaDevendas) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    // Dentro de entidades/Venda.java
     public String toCSVString() {
-        // Inclui atributos próprios: num, data, valorFinal
-        // Também precisa do código do Comprador e do ID da Tecnologia
-        Comprador c = getComprador(); // Supondo que você tenha o método getComprador()
-        Tecnologia t = getTecnologia(); // Supondo que você tenha o método getTecnologia()
-        
+
+        Comprador c = getComprador();
+        Tecnologia t = getTecnologia();
+
         long codComprador = (c != null) ? c.getCod() : 0;
         long idTecnologia = (t != null) ? t.getId() : 0;
-        
+
         return getNum() + ";" + getData().getTime() + ";" + getNum() + ";" +
-            codComprador + ";" + idTecnologia; // Chaves estrangeiras
+                codComprador + ";" + idTecnologia;
     }
+
 }
