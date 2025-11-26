@@ -3,7 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package ui;
+
 import entidades.*;
+
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private Fornecedores listaFornecedores = new Fornecedores(new ArrayList<>());
     private Tecnologias listaTecnologias = new Tecnologias(new ArrayList<>());
     private Compradores listaCompradores = new Compradores(new ArrayList<>());
+    private Vendas listaVendas = new Vendas(new ArrayList<>());
     /**
      * Creates new form NewJFrame
      */
@@ -24,7 +27,6 @@ public class TelaInicial extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public TelaInicial() {
-        // 1. O NetBeans constrói os componentes
         initComponents();
 
         // --- DEFINIÇÃO DA PALETA DE CORES E FONTES ---
@@ -60,8 +62,8 @@ public class TelaInicial extends javax.swing.JFrame {
         // --- 4. PAINEL CENTRAL (BOTÕES) ---
         javax.swing.JPanel panelBotoes = new javax.swing.JPanel();
         panelBotoes.setBackground(corFundo);
-        panelBotoes.setLayout(new java.awt.GridLayout(4, 1, 0, 15));
-        panelBotoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 300, 30, 300)); 
+        panelBotoes.setLayout(new java.awt.GridLayout(5, 1, 0, 20));
+        panelBotoes.setBorder(javax.swing.BorderFactory.createEmptyBorder(20, 325, 30, 325));
 
         java.awt.Dimension tamBotao = new java.awt.Dimension(200, 30); 
 
@@ -97,11 +99,13 @@ public class TelaInicial extends javax.swing.JFrame {
         aplicarEstilo.accept(btnTecnologia);
         aplicarEstilo.accept(btnCompradores);
         aplicarEstilo.accept(btnVendas);
+        aplicarEstilo.accept(btnConsulta);
 
         panelBotoes.add(btnFornecedores);
         panelBotoes.add(btnTecnologia);
         panelBotoes.add(btnCompradores);
         panelBotoes.add(btnVendas);
+        panelBotoes.add(btnConsulta);
 
         
         // --- 5. PAINEL SUL (BOTÃO FECHAR) ---
@@ -162,9 +166,10 @@ public class TelaInicial extends javax.swing.JFrame {
         btnCompradores = new javax.swing.JButton();
         btnTecnologia = new javax.swing.JButton();
         btnVendas = new javax.swing.JButton();
+        btnConsulta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("TRABALHO FINAL POO");
+        setTitle("Exercício 3 - POO");
 
         btnFinalizar.setText("Fechar");
         btnFinalizar.addActionListener(new java.awt.event.ActionListener() {
@@ -197,25 +202,36 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         btnVendas.setText("Vendas");
-    
+        btnVendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVendasActionPerformed(evt);
+            }
+        });
+
+        btnConsulta.setText("Consulta");
+        btnConsulta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnFinalizar)
-                .addGap(36, 36, 36))
-            .addGroup(layout.createSequentialGroup()
                 .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnCompradores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnTecnologia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(98, Short.MAX_VALUE))
+                    .addComponent(btnConsulta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(btnVendas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCompradores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnFornecedores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTecnologia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFinalizar)
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -230,9 +246,15 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addComponent(btnCompradores)
                 .addGap(18, 18, 18)
                 .addComponent(btnVendas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
-                .addComponent(btnFinalizar)
-                .addGap(24, 24, 24))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addComponent(btnFinalizar)
+                        .addGap(24, 24, 24))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnConsulta)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         pack();
@@ -269,6 +291,26 @@ public class TelaInicial extends javax.swing.JFrame {
         this.setVisible(true);
     }//GEN-LAST:event_btnTecnologiaActionPerformed
 
+    private void btnConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultaActionPerformed
+        ConsultasDialog janelaConsulta = new ConsultasDialog(this, true);
+        
+        this.setVisible(false);
+        janelaConsulta.setLocationRelativeTo(null);
+        janelaConsulta.setVisible(true);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnConsultaActionPerformed
+
+    private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
+        CadastroVendaDialog janelaVenda = new CadastroVendaDialog(this, true, listaCompradores, listaTecnologias, listaVendas);
+        
+        this.setVisible(false);
+        janelaVenda.setLocationRelativeTo(null);
+        janelaVenda.setVisible(true);
+        this.setVisible(true);
+    }//GEN-LAST:event_btnVendasActionPerformed
+
+    
+    
     
     /**
      * @param args the command line arguments
@@ -294,6 +336,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCompradores;
+    private javax.swing.JButton btnConsulta;
     private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnFornecedores;
     private javax.swing.JButton btnTecnologia;

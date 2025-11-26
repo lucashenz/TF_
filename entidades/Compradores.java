@@ -58,6 +58,14 @@ public class Compradores {
     public Comprador getComprador(int c){
         return compradores.get(c);
     }
+
+    public Comprador getCompradorByName(String nome) {
+        for (int i = 0; i < compradores.size(); i++) {
+            if (compradores.get(i).getNome().equals(nome)) 
+                return compradores.get(i);
+        }
+        return null;
+    }
     
     
 }

@@ -52,6 +52,14 @@ public class Tecnologias {
     public Tecnologia getTecnologia(int t){
         return tecnologias.get(t);
     }
+
+    public Tecnologia getTecnologiaByName(String nome) {
+        for (int i = 0; i < tecnologias.size(); i++) {
+            if (tecnologias.get(i).getDescricao().equals(nome)) 
+                return tecnologias.get(i);
+        }
+        return null;
+    }
     
     @Override
     public String toString() {

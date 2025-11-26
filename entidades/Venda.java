@@ -1,145 +1,68 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
 package entidades;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
-import java.util.Iterator;
 import java.util.Queue;
 
+/**
+ *
+ * @author arthurzimmer
+ */
 public class Venda {
-    private long num;
-    private Date data;
-    private double valorFinal;
     private Comprador comprador;
     private Tecnologia tecnologia;
+    private long num;
+    private Date data;
 
-
-    public Venda(int num, String dataStr, Comprador comprador, Tecnologia tecnologia) {
-        this.num = num;
+    public Venda(Comprador comprador, Tecnologia tecnologia, long num, Date data) {
         this.comprador = comprador;
         this.tecnologia = tecnologia;
-
-
-        try {
-            this.data = new SimpleDateFormat("dd/MM/yyyy").parse(dataStr);
-        } catch (ParseException e) {
-            System.err.println("Data inválida na venda: " + dataStr);
-            this.data = null;
-        }
-
-    }
-
-
-
-
-
-
-
-    public double calculaValorFinal(Queue<Venda> FilaDevendas) {
-        if (tecnologia == null || tecnologia.getFornecedor() == null) {
-            System.err.println("Erro: tecnologia ou fornecedor não definido para a venda" + num);
-            return 0.0;
-        }
-        double valorBase = tecnologia.getValorBase();
-        double valorAcrescido = valorBase;
-        Area areaFornecedor = tecnologia.getFornecedor().getArea();
-
-        switch (areaFornecedor) {
-            case TI:
-                valorAcrescido = valorBase * 1.2;
-                break;
-            case ANDROIDES:
-                valorAcrescido = valorBase * 1.15;
-                break;
-
-            case EMERGENTE:
-                valorAcrescido = valorBase * 1.25;
-                break;
-
-            case ALIMENTOS:
-                valorAcrescido = valorBase * 1.10;
-                break;
-            default:
-                System.err.println("Area desconhecida para vendas" + num);
-        }
-        int contadorVendas = 0;
-        for (Venda v : FilaDevendas) {
-            if (v.getComprador().equals(this.comprador) && v.getNum() != this.num) {
-                contadorVendas++;
-            }
-        }
-
-        double descontoPercentual = Math.min(contadorVendas, 10) * 0.01;
-        double valorFinal = valorAcrescido * (1 - descontoPercentual);
-        this.valorFinal = valorFinal;
-        return valorFinal;
-    }
-
-    public long getNum() {
-        return num;
-    }
-
-    public void setNum(long num) {
         this.num = num;
-    }
-
-    public Date getData() {
-        return data;
-    }
-
-    public void setData(Date data) {
         this.data = data;
-    }
-
-    public double getValorFinal() {
-        return valorFinal;
-    }
-
-    public void setValorFinal(double valorFinal) {
-        this.valorFinal = valorFinal;
     }
 
     public Comprador getComprador() {
         return comprador;
     }
 
-    public void setComprador(Comprador comprador) {
-        this.comprador = comprador;
-    }
-
     public Tecnologia getTecnologia() {
         return tecnologia;
+    }
+
+    public long getNum() {
+        return num;
+    }
+
+    public Date getData() {
+        return data;
+    }
+
+    public void setComprador(Comprador comprador) {
+        this.comprador = comprador;
     }
 
     public void setTecnologia(Tecnologia tecnologia) {
         this.tecnologia = tecnologia;
     }
 
-    public void removerDeterminadaVenda(Queue<Venda> FilaDevendas, long numeroVendaRemocao) {
-        boolean removido = false;
-        try{
-            Iterator<Venda> it = FilaDevendas.iterator();
-            while (it.hasNext()) {
-                Venda v = it.next();
-
-                if(v.getNum() == numeroVendaRemocao){
-                it.remove();
-                removido = true;
-                System.out.println("Venda "+ numeroVendaRemocao + " removido com sucesso");
-                break;
-                }
-            }
-            if(!removido){
-                System.err.println("Erro: venda"+numeroVendaRemocao+ "não encontrada.");
-        }
-        }catch(Exception e){
-            System.out.println("Erro ao remover determinada venda: "+e.getMessage());
-        }
+    public void setNum(long num) {
+        this.num = num;
     }
 
+    public void setData(Date data) {
+        this.data = data;
+    }
 
-    public int size() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'size'");
+    @Override
+    public String toString() {
+        return "Venda{" + "comprador=" + comprador + ", tecnologia=" + tecnologia + ", num=" + num + ", data=" + data + '}';
+    }
+
+    public void calculaValorFinal(Queue<Venda> FilaDevendas) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

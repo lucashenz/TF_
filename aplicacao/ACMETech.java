@@ -1,10 +1,9 @@
 package aplicacao;
 
+import entidades.*;
+import ui.TelaInicial;
 import java.nio.file.Files;
 import java.util.*;
-
-import ui.*;
-import entidades.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -108,13 +107,24 @@ public class ACMETech {
 
                 int num = sc.nextInt();
                 String data = sc.next();
+                
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                sdf.setLenient(false);
+
+                Date dataAux;
+                try {
+                    dataAux = sdf.parse(data);
+                } catch (ParseException e) {
+                    throw new IllegalArgumentException("Data inválida: " + data + ". Use o formato dd/MM/yyyy");
+                }
+                
                 int codComprador = sc.nextInt();
                 int idTecnologia = sc.nextInt();
 
                 Comprador comprador = buscarCompradorPorCodigo(codComprador);
                 Tecnologia tecnologia = buscarTecnologiaPorId(idTecnologia);
 
-                Venda v = new Venda(num, data, comprador, tecnologia);
+                Venda v = new Venda(comprador, tecnologia, num, dataAux);
                 v.calculaValorFinal(FilaDevendas);
                 FilaDevendas.add(v);
 
