@@ -10,11 +10,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import aplicacao.*; 
 
-/**
- * Diálogo para gerenciar a persistência (salvar e carregar) dos dados do sistema.
- */
+
+
 public class DadosDialog extends JDialog {
 
     private static final Logger logger = Logger.getLogger(DadosDialog.class.getName());
@@ -61,13 +59,15 @@ public class DadosDialog extends JDialog {
             Fornecedores fornecedores,
             Tecnologias tecnologias,
             Compradores compradores,
-            Vendas vendas
+            Vendas vendas,
+            ACMETech acme
     ) {
         super(parent, modal);
         this.fornecedores = fornecedores;
         this.tecnologias = tecnologias;
         this.compradores = compradores;
         this.vendas = vendas;
+        this.acmeTech = acme;
 
         initComponents();
         setupLayout();

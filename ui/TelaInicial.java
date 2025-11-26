@@ -4,6 +4,7 @@
  */
 package ui;
 
+import aplicacao.ACMETech;
 import entidades.*;
 
 
@@ -20,6 +21,7 @@ public class TelaInicial extends javax.swing.JFrame {
     private Tecnologias listaTecnologias = new Tecnologias(new ArrayList<>());
     private Compradores listaCompradores = new Compradores(new ArrayList<>());
     private Vendas listaVendas = new Vendas(new ArrayList<>());
+    private ACMETech acme = new ACMETech();
     /**
      * Creates new form NewJFrame
      */
@@ -27,6 +29,7 @@ public class TelaInicial extends javax.swing.JFrame {
      * Creates new form NewJFrame
      */
     public TelaInicial() {
+
         initComponents();
 
         // --- DEFINIÇÃO DA PALETA DE CORES E FONTES ---
@@ -268,7 +271,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void btnDadosActionPerformed(java.awt.event.ActionEvent evt) {
 
-        DadosDialog tela = new DadosDialog(this, true, listaFornecedores, listaTecnologias, listaCompradores, listaVendas);
+        DadosDialog tela = new DadosDialog(this, true, listaFornecedores, listaTecnologias, listaCompradores, listaVendas, acme);
 
         this.setVisible(false);
         tela.setLocationRelativeTo(null);
