@@ -136,6 +136,7 @@ public class ACMETech {
     }
 
     public void executar() {
+        inicializar();
         TelaInicial panel = new TelaInicial();
         panel.setVisible(true);
     }

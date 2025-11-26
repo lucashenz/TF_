@@ -35,6 +35,17 @@ public class Vendas {
     public int size() {
         return vendas.size();
     }
+
+    public int removeVendaPorNumero(long numero) {
+        for (int i = 0; i < vendas.size(); i++) {
+            Venda v = vendas.get(i);
+            if (v.getNum() == numero) {
+                vendas.remove(i);
+                return i;
+            }
+        }
+        return -1;
+    }
     
     
 }

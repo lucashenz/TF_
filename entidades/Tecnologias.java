@@ -60,6 +60,22 @@ public class Tecnologias {
         }
         return null;
     }
+
+    public Tecnologia getTecnologiaComMaiorValor () {
+        if (tecnologias.isEmpty()) {
+            return null; 
+        }
+
+        Tecnologia tecnologiaComMaiorValor = tecnologias.get(0);
+
+        for (Tecnologia tecnologia : tecnologias) {
+            if (tecnologia.getValorBase() > tecnologiaComMaiorValor.getValorBase()) {
+                tecnologiaComMaiorValor = tecnologia;
+            }
+        }
+
+        return tecnologiaComMaiorValor;
+    }
     
     @Override
     public String toString() {

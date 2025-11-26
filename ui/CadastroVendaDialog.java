@@ -234,9 +234,14 @@ public CadastroVendaDialog(Frame parent, boolean modal, Compradores compradores,
 
         stylePri.accept(btnCadastrar);
         styleSec.accept(btnVoltar); styleSec.accept(btnLimpar); styleSec.accept(btnRelatorio);
+        styleSec.accept(btnRemover);
 
-        panelBotoesEsquerda.add(btnLimpar); panelBotoesEsquerda.add(btnRelatorio);
-        panelBotoesDireita.add(btnVoltar); panelBotoesDireita.add(btnCadastrar);
+        panelBotoesEsquerda.add(btnLimpar); 
+        panelBotoesEsquerda.add(btnRelatorio);
+        panelBotoesEsquerda.add(btnRemover);
+        
+        panelBotoesDireita.add(btnVoltar); 
+        panelBotoesDireita.add(btnCadastrar);
 
         getContentPane().add(panelTitulo, java.awt.BorderLayout.NORTH);
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
@@ -379,6 +384,7 @@ private void configurarDetalhes(javax.swing.JPanel panel, javax.swing.JLabel[] l
         btnRelatorio = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
         btnLimpar = new javax.swing.JButton();
+        btnRemover = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadsatrar Venda");
@@ -656,6 +662,13 @@ private void configurarDetalhes(javax.swing.JPanel panel, javax.swing.JLabel[] l
             }
         });
 
+        btnRemover.setText("Remover");
+        btnRemover.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -773,6 +786,29 @@ private void configurarDetalhes(javax.swing.JPanel panel, javax.swing.JLabel[] l
         }    
     }//GEN-LAST:event_ListaTecnologiasValueChanged
 
+
+    private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {                                           
+    try {
+        long numero = Long.parseLong(TFId.getText().trim());
+
+        int resultado = vendas.removeVendaPorNumero(numero);
+
+        if (resultado >= 0) {
+            TALog.setText("Venda nº " + numero + " removida com sucesso!");
+            TFQtdVendas.setText(String.valueOf(vendas.size()));
+        } else {
+            TALog.setText("ERRO: Não existe venda com o número informado.");
+        }
+
+    } catch (NumberFormatException e) {
+        TALog.setText("ERRO: Número da venda inválido.");
+    }
+}
+
+
+
+
+
     private void btnLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparActionPerformed
         ListaCompradores.clearSelection();
         ListaTecnologias.clearSelection();
@@ -813,6 +849,7 @@ private void configurarDetalhes(javax.swing.JPanel panel, javax.swing.JLabel[] l
             
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             sdf.setLenient(false);
+            TALog.setText("Venda cadastrada com sucesso!");
 
             Date dataAux;
             try {
@@ -902,6 +939,7 @@ private void configurarDetalhes(javax.swing.JPanel panel, javax.swing.JLabel[] l
     private javax.swing.JButton btnLimpar;
     private javax.swing.JButton btnRelatorio;
     private javax.swing.JButton btnVoltar;
+    private javax.swing.JButton btnRemover;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
